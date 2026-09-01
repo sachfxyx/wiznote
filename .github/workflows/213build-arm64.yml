@@ -32,15 +32,15 @@ jobs:
         with:
           context: .
           platforms: linux/arm64
-          push: true # 推送到ghcr，不要load:true
+          push: true
           tags: ghcr.io/${{ github.repository_owner }}/wiznote:arm64
 
       - name: Pull full arm64 image
-        run: docker pull ghcr.io/${{ github.repository_owner }}/wiznote:arm64
+        run: docker pull --platform linux/arm64 ghcr.io/${{ github.repository_owner }}/wiznote:arm64
 
       - name: Export full image to tar.gz
         run: |
-          docker save ghcr.io/${{ github.repository_owner }}/wiznote:arm64 | gzip > wiznote-ikiwicc-full-arm64.tar.gz
+          docker save --platform linux/arm64 ghcr.io/${{ github.repository_owner }}/wiznote:arm64 | gzip > wiznote-ikiwicc-full-arm64.tar.gz
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
